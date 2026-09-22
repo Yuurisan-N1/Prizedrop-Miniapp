@@ -5,7 +5,7 @@
 <img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Mandatory%20channel%20check;Ad%20reward%20runner;Spin%20wheel%20runner;Task%20board%20claims;Giveaway%20entries"/>
 
 <p>
-  <img alt="python" src="https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white"/>
+  <img alt="python" src="https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white"/>
   <img alt="platform" src="https://img.shields.io/badge/Platform-Prize%20Drop%20Miniapp-111111"/>
   <img alt="multi-account" src="https://img.shields.io/badge/Multi--Account-Supported-111111"/>
   <img alt="proxy" src="https://img.shields.io/badge/Proxy-Supported-111111"/>
@@ -36,7 +36,7 @@
 
 ## Requirements
 
-- Python `3.9+`
+- Python `3.12+`
 - Git
 
 ---
@@ -46,8 +46,8 @@
 **Clone the repository:**
 
 ```bash
-git clone https://github.com/Yuurisan-N1/PrizeDrop-Miniapp.git
-cd PrizeDrop-Miniapp
+git clone https://github.com/Yuurisan-N1/Prizedrop-Miniapp.git
+cd Prizedrop-Miniapp
 ```
 
 **Install dependencies:**

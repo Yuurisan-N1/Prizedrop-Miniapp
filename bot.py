@@ -141,14 +141,17 @@ def normalize_proxy(raw):
 def load_config():
     if not os.path.isfile("config.json"):
         with open("config.json", "w", encoding="utf-8") as handle:
-            json.dump({"settings": {"sleep_seconds": 3600}}, handle, indent=2)
+            json.dump({"settings": {"sleep_seconds": 3600, "join_giveaways": True}}, handle, indent=2)
             handle.write("\n")
     try:
         with open("config.json", encoding="utf-8") as handle:
             data = json.load(handle)
-        return int(data.get("settings", {}).get("sleep_seconds", 3600))
+        settings = data.get("settings", {})
+        sleep = int(settings.get("sleep_seconds", 3600))
+        join_giveaways = bool(settings.get("join_giveaways", True))
+        return sleep, join_giveaways
     except Exception:
-        return 3600
+        return 3600, True
 
 
 def load_accounts():
@@ -416,7 +419,7 @@ async def run_giveaways(account, config, state):
         break
 
 
-async def run_account(init_data, proxy_url):
+async def run_account(init_data, proxy_url, join_giveaways=True):
     account = PrizeAccount(init_data, proxy_url)
     await account.open()
     try:
@@ -433,7 +436,8 @@ async def run_account(init_data, proxy_url):
         credited += await run_ads(account, config, account.state)
         credited += await run_spins(account, config)
         credited += await run_tasks(account, config)
-        await run_giveaways(account, config, account.state)
+        if join_giveaways:
+            await run_giveaways(account, config, account.state)
         state = await account.refresh()
         if credited > 0:
             log_green(f"Cycle closed with {clean_text(credited, 0)} tickets credited on this run")
@@ -448,7 +452,7 @@ async def run_account(init_data, proxy_url):
 
 async def main():
     show_banner(MY_PROJECT)
-    sleep_seconds = load_config()
+    sleep_seconds, join_giveaways = load_config()
     accounts = load_accounts()
     proxies = load_proxies()
     if not accounts:
@@ -463,7 +467,7 @@ async def main():
                 print()
             proxy_url = proxies[idx % len(proxies)] if proxies else None
             try:
-                await run_account(init_data, proxy_url)
+                await run_account(init_data, proxy_url, join_giveaways)
             except Exception as exc:
                 log_red(f"Request to the server failed with {clean_text(type(exc).__name__, 'error')}")
         countdown(sleep_seconds)

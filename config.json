@@ -1,5 +1,6 @@
 {
   "settings": {
-    "sleep_seconds": 3600
+    "sleep_seconds": 3600,
+    "join_giveaways": false
   }
 }
